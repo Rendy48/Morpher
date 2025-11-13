@@ -7,8 +7,8 @@ local Variant = "WhiteNeko"
 
 local HatMeshID = "rbxassetid://138977266310225"
 local HatTextureID = "rbxassetid://81342655410546"
-local FrontMeshID = ""
-local FrontTextureID = ""
+local FrontMeshID = "rbxassetid://92133820887299"
+local FrontTextureID = "rbxassetid://78886200414806"
 
 local Variants = {
     ["WhiteNeko"] = {
