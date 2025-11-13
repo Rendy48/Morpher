@@ -1,0 +1,76 @@
+--  _____  _   _   ___ _____ _____ ______ _____ 
+-- /  __ \| | | | / _ \_   _|  __ \| ___ \_   _|
+-- | /  \/| |_| |/ /_\ \| | | |  \/| |_/ / | |  
+-- | |    |  _  ||  _  || | | | __ |  __/  | |  
+-- | \__/\| | | || | | || | | |_\ \| |     | |  
+--  \____/\_| |_/\_| |_/\_/  \____/\_|     \_/  
+
+-- Player Morpher :D
+                                             
+local Players = game:GetService("Players")
+local player = Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+-- Create a new HumanoidDescription
+local desc = Instance.new("HumanoidDescription")
+desc.Name = "FullCustomDescription"
+
+-- ===== APPEARANCE =====
+desc.HeadColor = Color3.fromRGB(255, 204, 153)
+desc.LeftArmColor = Color3.fromRGB(255, 204, 153)
+desc.RightArmColor = Color3.fromRGB(255, 204, 153)
+desc.LeftLegColor = Color3.fromRGB(255, 204, 153)
+desc.RightLegColor = Color3.fromRGB(255, 204, 153)
+desc.TorsoColor = Color3.fromRGB(255, 204, 153)
+
+-- ===== CLOTHING =====
+desc.Shirt = 0           -- Asset ID (e.g., 123456789)
+desc.Pants = 0
+desc.GraphicTShirt = 0
+
+-- ===== BODY PARTS =====
+desc.Head = 0
+desc.Torso = 0
+desc.LeftArm = 0
+desc.RightArm = 0
+desc.LeftLeg = 0
+desc.RightLeg = 0
+
+-- ===== SCALE =====
+desc.BodyTypeScale = 0.5
+desc.DepthScale = 1.0
+desc.HeadScale = 1.0
+desc.HeightScale = 1.0
+desc.ProportionScale = 0.5
+desc.WidthScale = 1.0
+
+-- ===== ACCESSORIES =====
+desc.HatAccessory = ""
+desc.HairAccessory = ""
+desc.FaceAccessory = ""
+desc.NeckAccessory = ""
+desc.ShoulderAccessory = ""
+desc.FrontAccessory = ""
+desc.BackAccessory = ""
+desc.WaistAccessory = ""
+
+-- ===== BODY PACKAGES (Bundles) =====
+desc.ClimbAnimation = 0
+desc.FallAnimation = 0
+desc.IdleAnimation = 0
+desc.JumpAnimation = 0
+desc.RunAnimation = 0
+desc.SwimAnimation = 0
+desc.WalkAnimation = 0
+
+-- ===== FACE =====
+desc.Face = 0
+
+-- ===== OTHER SETTINGS =====
+desc.Parent = humanoid
+
+-- Apply the description to morph the character
+humanoid:ApplyDescription(desc)
+
+print("✅ HumanoidDescription applied successfully with all customizable properties.")
