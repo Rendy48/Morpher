@@ -1,76 +1,112 @@
---  _____  _   _   ___ _____ _____ ______ _____ 
--- /  __ \| | | | / _ \_   _|  __ \| ___ \_   _|
--- | /  \/| |_| |/ /_\ \| | | |  \/| |_/ / | |  
--- | |    |  _  ||  _  || | | | __ |  __/  | |  
--- | \__/\| | | || | | || | | |_\ \| |     | |  
---  \____/\_| |_/\_| |_/\_/  \____/\_|     \_/  
 
--- Player Morpher :D
-                                             
 local Players = game:GetService("Players")
-local player = Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
+local LocalPlayer = Players.LocalPlayer
 
--- Create a new HumanoidDescription
-local desc = Instance.new("HumanoidDescription")
-desc.Name = "FullCustomDescription"
+-- configs
+local Variant = "WhiteNeko"
 
--- ===== APPEARANCE =====
-desc.HeadColor = Color3.fromRGB(255, 204, 153)
-desc.LeftArmColor = Color3.fromRGB(255, 204, 153)
-desc.RightArmColor = Color3.fromRGB(255, 204, 153)
-desc.LeftLegColor = Color3.fromRGB(255, 204, 153)
-desc.RightLegColor = Color3.fromRGB(255, 204, 153)
-desc.TorsoColor = Color3.fromRGB(255, 204, 153)
+local HatMeshID = "rbxassetid://138977266310225"
+local HatTextureID = "rbxassetid://81342655410546"
+local FrontMeshID = ""
+local FrontTextureID = ""
 
--- ===== CLOTHING =====
-desc.Shirt = 0           -- Asset ID (e.g., 123456789)
-desc.Pants = 0
-desc.GraphicTShirt = 0
+local Variants = {
+    ["WhiteNeko"] = {
+        Shirt = "rbxassetid://0",
+        Pants = "rbxassetid://104035956040657",
+        BodyColor = BrickColor.new("Institutional white")
+    }
+}
 
--- ===== BODY PARTS =====
-desc.Head = 0
-desc.Torso = 0
-desc.LeftArm = 0
-desc.RightArm = 0
-desc.LeftLeg = 0
-desc.RightLeg = 0
+local function createMeshPart(name, meshId, textureId, scale)
+    local part = Instance.new("Part")
+    part.Name = name
+    part.Size = Vector3.new(1, 1, 1)
+    part.CanCollide = false
+    part.Anchored = false
+    part.Transparency = 0
+    part.Parent = nil
 
--- ===== SCALE =====
-desc.BodyTypeScale = 0.5
-desc.DepthScale = 1.0
-desc.HeadScale = 1.0
-desc.HeightScale = 1.0
-desc.ProportionScale = 0.5
-desc.WidthScale = 1.0
+    local mesh = Instance.new("SpecialMesh")
+    mesh.MeshType = Enum.MeshType.FileMesh
+    mesh.MeshId = meshId
+    mesh.TextureId = textureId
+    mesh.Scale = scale or Vector3.new(1, 1, 1)
+    mesh.Parent = part
 
--- ===== ACCESSORIES =====
-desc.HatAccessory = ""
-desc.HairAccessory = ""
-desc.FaceAccessory = ""
-desc.NeckAccessory = ""
-desc.ShoulderAccessory = ""
-desc.FrontAccessory = ""
-desc.BackAccessory = ""
-desc.WaistAccessory = ""
+    return part
+end
 
--- ===== BODY PACKAGES (Bundles) =====
-desc.ClimbAnimation = 0
-desc.FallAnimation = 0
-desc.IdleAnimation = 0
-desc.JumpAnimation = 0
-desc.RunAnimation = 0
-desc.SwimAnimation = 0
-desc.WalkAnimation = 0
+local function MorphPlayer()
+    local character = LocalPlayer.Character or LocalPlayer.CharacterAdded:Wait()
+    local variantData = Variants[Variant]
+    if not variantData then return end
 
--- ===== FACE =====
-desc.Face = 0
+    for _, item in ipairs(character:GetChildren()) do
+        if item:IsA("Accessory") or item:IsA("Hat") or item:IsA("Shirt") or item:IsA("Pants") or item:IsA("ShirtGraphic") then
+            item:Destroy()
+        end
+    end
 
--- ===== OTHER SETTINGS =====
-desc.Parent = humanoid
+    local head = character:FindFirstChild("Head")
+    if head then
+        for _, d in ipairs(head:GetChildren()) do
+            if d:IsA("Decal") then d:Destroy() end
+        end
+    end
 
--- Apply the description to morph the character
-humanoid:ApplyDescription(desc)
+    for _, part in ipairs(character:GetChildren()) do
+        if part:IsA("BasePart") then
+            part.BrickColor = variantData.BodyColor
+        end
+    end
 
-print("✅ HumanoidDescription applied successfully with all customizable properties.")
+    local shirt = Instance.new("Shirt")
+    shirt.Name = "DawgWhat"
+    shirt.ShirtTemplate = variantData.Shirt
+    shirt.Parent = character
+
+    local pants = Instance.new("Pants")
+    pants.Name = "Blanket"
+    pants.PantsTemplate = variantData.Pants
+    pants.Parent = character
+
+    Local torso = character:FindFirstChild("Torso")
+    if torso then
+        local TorsoMesh = Instance.new("CharacterMesh")
+        TorsoMesh.MeshId = "rbxassetid://48474356"
+        TorsoMesh.Parent = torso
+
+        local front = createMeshPart("Bodysuit", FrontMeshID, FrontTextureID, Vector3.new(1.0, 1.0, 1.0))
+        hat.Parent = character
+
+        local weld = Instance.new("Weld")
+        weld.Part0 = torso
+        weld.Part1 = front
+        weld.C0 = CFrame.new(-0.10, 0.9, -0.2)
+        weld.Parent = front
+
+        end
+    end
+
+    if head then
+        local hat = createMeshPart("CatEars", HatMeshID, HatTextureID, Vector3.new(1.0, 1.0, 1.0))
+        hat.Parent = character
+
+        local weld = Instance.new("Weld")
+        weld.Part0 = head
+        weld.Part1 = hat
+        weld.C0 = CFrame.new(-0.10, 0.9, -0.2)
+        weld.Parent = hat
+    end
+end
+
+LocalPlayer.CharacterAdded:Connect(function()
+    task.wait(1)
+    MorphPlayer()
+end)
+
+if LocalPlayer.Character then
+    task.wait(1)
+    MorphPlayer()
+end
