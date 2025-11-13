@@ -7,8 +7,10 @@ local Variant = "WhiteNeko"
 
 local HatMeshID = "rbxassetid://138977266310225"
 local HatTextureID = "rbxassetid://81342655410546"
-local FrontMeshID = "rbxassetid://92133820887299"
-local FrontTextureID = "rbxassetid://78886200414806"
+local HairMeshID = "rbxassetid://92133820887299"
+local HairTextureID = "rbxassetid://78886200414806"
+local FrontMeshID = ""
+local FrontTextureID = ""
 
 local Variants = {
     ["WhiteNeko"] = {
@@ -78,12 +80,12 @@ local function MorphPlayer()
         TorsoMesh.Parent = torso
 
         local front = createMeshPart("Bodysuit", FrontMeshID, FrontTextureID, Vector3.new(1.0, 1.0, 1.0))
-        hat.Parent = character
+        front.Parent = character
 
         local weld = Instance.new("Weld")
         weld.Part0 = torso
         weld.Part1 = front
-        weld.C0 = CFrame.new(-0.10, 0.9, -0.2)
+        weld.C0 = CFrame.new(-0.003, 0.687, -0.095)
         weld.Parent = front
 
         end
@@ -98,6 +100,15 @@ local function MorphPlayer()
         weld.Part1 = hat
         weld.C0 = CFrame.new(-0.10, 0.9, -0.2)
         weld.Parent = hat
+
+        local hair = createMeshPart("Hair", HairMeshID, HairTextureID, Vector3.new(1.0, 1.0, 1.0))
+        hair.Parent = character
+
+        local weld = Instance.new("Weld")
+        weld.Part0 = torso
+        weld.Part1 = hair
+        weld.C0 = CFrame.new(-0.003, 0.687, -0.095)
+        weld.Parent = hair
     end
 end
 
