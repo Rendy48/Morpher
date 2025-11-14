@@ -5,12 +5,12 @@ local LocalPlayer = Players.LocalPlayer
 -- configs
 local Variant = "WhiteNeko"
 
-local HatMeshID = "rbxassetid://138977266310225"
-local HatTextureID = "rbxassetid://81342655410546"
+local HatMeshID = "rbxassetid://139767106824582"
+local HatTextureID = "rbxassetid://82822549887465"
 local HairMeshID = "rbxassetid://92133820887299"
 local HairTextureID = "rbxassetid://78886200414806"
-local FrontMeshID = ""
-local FrontTextureID = ""
+local FrontMeshID = "rbxassetid://81980267502978"
+local FrontTextureID = "rbxassetid://92754462978127"
 
 local Variants = {
     ["WhiteNeko"] = {
@@ -85,7 +85,7 @@ local function MorphPlayer()
         local weld = Instance.new("Weld")
         weld.Part0 = torso
         weld.Part1 = front
-        weld.C0 = CFrame.new(-0.003, 0.687, -0.095)
+        weld.C0 = CFrame.new(-0.002, -0.095, 0.387)
         weld.Parent = front
 
         end
